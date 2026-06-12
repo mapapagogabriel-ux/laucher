@@ -1,0 +1,63 @@
+{
+  "name": "hidden-war-v2-launcher",
+  "version": "2.4.1",
+  "description": "Hidden War V2 — Naruto RP Minecraft Launcher",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder --win"
+  },
+  "author": "Hidden War Team",
+  "license": "MIT",
+  "build": {
+    "appId": "com.hiddenwar.launcher",
+    "productName": "Hidden War V2",
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "assets/icon.ico",
+      "installerHeaderIcon": "assets/icon.ico",
+      "shortcutName": "Hidden War V2"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "launcher.js",
+      "index.html",
+      "assets/**/*",
+      "node_modules/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "bundled",
+        "to": "bundled",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "asar": true,
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "SEU_USUARIO_GITHUB",
+        "repo": "SEU_REPOSITORIO"
+      }
+    ]
+  },
+  "devDependencies": {
+    "electron": "^35.7.5",
+    "electron-builder": "^26.15.0",
+    "png-to-ico": "^3.0.1",
+    "sharp": "^0.34.5"
+  },
+  "dependencies": {
+    "electron-updater": "^6.8.9",
+    "minecraft-launcher-core": "^3.18.2"
+  }
+}

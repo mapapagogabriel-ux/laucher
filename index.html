@@ -1,0 +1,3086 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hidden War V2 — Naruto RP Launcher</title>
+<meta name="description" content="Launcher oficial do servidor Hidden War V2 — Naruto RP Experience para Minecraft 1.12.2 com Forge.">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --black-deep: #0a0a0c;
+  --black-surface: #111114;
+  --black-card: #16161a;
+  --black-elevated: #1c1c22;
+  --chakra-orange: #E8820A;
+  --chakra-orange-light: #f5a623;
+  --chakra-orange-glow: rgba(232, 130, 10, 0.4);
+  --gold-aged: #F0D080;
+  --gold-dim: rgba(240, 208, 128, 0.3);
+  --blood-red: #c0392b;
+  --blood-red-dim: rgba(192, 57, 43, 0.5);
+  --text-primary: #e8e6e3;
+  --text-secondary: #8a8690;
+  --text-muted: #55515c;
+  --parchment: rgba(240, 208, 128, 0.03);
+  --border-gold: rgba(240, 208, 128, 0.12);
+  --sidebar-width: 220px;
+  --font-epic: 'Cinzel', serif;
+  --font-system: 'Inter', sans-serif;
+  --font-jp: 'Noto Sans JP', sans-serif;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-system);
+  background: var(--black-deep);
+  color: var(--text-primary);
+  user-select: none;
+  position: relative;
+}
+
+/* ===== BACKGROUND LAYERS ===== */
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Parchment texture overlay */
+.bg-parchment {
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(240, 208, 128, 0.008) 2px,
+      rgba(240, 208, 128, 0.008) 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 3px,
+      rgba(240, 208, 128, 0.005) 3px,
+      rgba(240, 208, 128, 0.005) 6px
+    );
+}
+
+/* Mountain silhouette */
+.bg-mountains {
+  background: linear-gradient(to top,
+    var(--black-deep) 0%,
+    transparent 30%
+  );
+}
+
+.bg-mountains::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: var(--sidebar-width);
+  right: 0;
+  height: 280px;
+  background:
+    linear-gradient(to top, var(--black-deep) 0%, transparent 60%);
+  z-index: 1;
+}
+
+.bg-mountains::after {
+  content: '';
+  position: absolute;
+  bottom: 60px;
+  left: var(--sidebar-width);
+  right: 0;
+  height: 220px;
+  opacity: 0.08;
+  background:
+    /* Hokage mountain faces - stylized peaks */
+    radial-gradient(ellipse 60px 80px at 30% 100%, var(--gold-aged) 0%, transparent 70%),
+    radial-gradient(ellipse 50px 90px at 42% 100%, var(--gold-aged) 0%, transparent 70%),
+    radial-gradient(ellipse 55px 85px at 54% 100%, var(--gold-aged) 0%, transparent 70%),
+    radial-gradient(ellipse 45px 75px at 66% 100%, var(--gold-aged) 0%, transparent 70%),
+    radial-gradient(ellipse 65px 70px at 78% 100%, var(--gold-aged) 0%, transparent 70%),
+    /* Mountain range */
+    polygon(0% 100%, 5% 60%, 15% 75%, 25% 40%, 35% 65%, 45% 30%, 55% 55%, 65% 25%, 75% 50%, 85% 35%, 95% 60%, 100% 100%);
+  clip-path: polygon(0% 100%, 3% 70%, 10% 80%, 18% 50%, 25% 65%, 30% 45%, 38% 60%, 45% 35%, 52% 55%, 58% 30%, 65% 50%, 72% 28%, 78% 45%, 85% 55%, 92% 40%, 100% 65%, 100% 100%);
+  background-color: var(--gold-aged);
+}
+
+/* Orange battle sky gradient */
+.bg-sky {
+  background: radial-gradient(
+    ellipse 120% 60% at 70% -10%,
+    rgba(232, 130, 10, 0.06) 0%,
+    rgba(192, 57, 43, 0.02) 40%,
+    transparent 70%
+  );
+}
+
+/* ===== KANJI WATERMARKS ===== */
+.kanji-watermark {
+  position: fixed;
+  font-family: var(--font-jp);
+  font-weight: 900;
+  opacity: 0.025;
+  color: var(--gold-aged);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.kanji-1 {
+  font-size: 280px;
+  top: 20px;
+  right: 40px;
+  animation: kanjiFloat1 20s ease-in-out infinite;
+}
+
+.kanji-2 {
+  font-size: 200px;
+  top: 200px;
+  right: 250px;
+  animation: kanjiFloat2 25s ease-in-out infinite;
+}
+
+.kanji-3 {
+  font-size: 240px;
+  bottom: -20px;
+  right: 120px;
+  animation: kanjiFloat3 22s ease-in-out infinite;
+}
+
+@keyframes kanjiFloat1 {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.025; }
+  50% { transform: translateY(-10px) rotate(2deg); opacity: 0.04; }
+}
+
+@keyframes kanjiFloat2 {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.02; }
+  50% { transform: translateY(8px) rotate(-1.5deg); opacity: 0.035; }
+}
+
+@keyframes kanjiFloat3 {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.025; }
+  50% { transform: translateY(-12px) rotate(1deg); opacity: 0.04; }
+}
+
+/* ===== SEAL CIRCLES ===== */
+.seal-circle {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.seal-circle-1 {
+  width: 300px;
+  height: 300px;
+  bottom: -80px;
+  right: -60px;
+  border: 1px solid rgba(240, 208, 128, 0.06);
+  animation: sealRotate 60s linear infinite;
+}
+
+.seal-circle-1::before {
+  content: '';
+  position: absolute;
+  inset: 15px;
+  border-radius: 50%;
+  border: 1px dashed rgba(232, 130, 10, 0.08);
+  animation: sealRotate 40s linear infinite reverse;
+}
+
+.seal-circle-1::after {
+  content: '';
+  position: absolute;
+  inset: 35px;
+  border-radius: 50%;
+  border: 1px solid rgba(240, 208, 128, 0.04);
+  animation: sealRotate 30s linear infinite;
+}
+
+.seal-circle-2 {
+  width: 200px;
+  height: 200px;
+  top: 30px;
+  right: 180px;
+  border: 1px solid rgba(240, 208, 128, 0.04);
+  animation: sealRotate 50s linear infinite reverse;
+}
+
+.seal-circle-2::before {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border-radius: 50%;
+  border: 1px dotted rgba(232, 130, 10, 0.06);
+  animation: sealRotate 35s linear infinite;
+}
+
+.seal-circle-3 {
+  width: 150px;
+  height: 150px;
+  top: 50%;
+  left: 350px;
+  border: 1px solid rgba(240, 208, 128, 0.03);
+  animation: sealRotate 45s linear infinite;
+}
+
+/* Inner seal rune patterns */
+.seal-rune {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.seal-rune::before,
+.seal-rune::after {
+  content: '';
+  position: absolute;
+  background: rgba(232, 130, 10, 0.05);
+}
+
+.seal-rune::before {
+  width: 1px;
+  height: 100%;
+  left: 50%;
+}
+
+.seal-rune::after {
+  width: 100%;
+  height: 1px;
+  top: 50%;
+}
+
+.seal-rune-rotated {
+  transform: rotate(45deg);
+}
+
+@keyframes sealRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ===== CHAKRA PARTICLES ===== */
+.particles-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: var(--chakra-orange);
+  border-radius: 50%;
+  opacity: 0;
+  box-shadow: 0 0 6px 2px var(--chakra-orange-glow);
+  animation: particleRise linear infinite;
+}
+
+@keyframes particleRise {
+  0% {
+    opacity: 0;
+    transform: translateY(0) translateX(0) scale(0.5);
+  }
+  15% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-400px) translateX(var(--drift)) scale(0.2);
+  }
+}
+
+/* ===== GOLDEN BORDER ===== */
+.launcher-border {
+  position: fixed;
+  inset: 0;
+  border: 1px solid var(--border-gold);
+  pointer-events: none;
+  z-index: 100;
+}
+
+.launcher-border::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border: 1px solid rgba(240, 208, 128, 0.04);
+}
+
+/* Corner ornaments */
+.corner-ornament {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  z-index: 101;
+  pointer-events: none;
+}
+
+.corner-ornament::before,
+.corner-ornament::after {
+  content: '';
+  position: absolute;
+  background: var(--gold-aged);
+  opacity: 0.3;
+}
+
+.corner-tl { top: 0; left: 0; }
+.corner-tl::before { width: 20px; height: 1px; top: 0; left: 0; }
+.corner-tl::after { width: 1px; height: 20px; top: 0; left: 0; }
+
+.corner-tr { top: 0; right: 0; }
+.corner-tr::before { width: 20px; height: 1px; top: 0; right: 0; }
+.corner-tr::after { width: 1px; height: 20px; top: 0; right: 0; }
+
+.corner-bl { bottom: 0; left: 0; }
+.corner-bl::before { width: 20px; height: 1px; bottom: 0; left: 0; }
+.corner-bl::after { width: 1px; height: 20px; bottom: 0; left: 0; }
+
+.corner-br { bottom: 0; right: 0; }
+.corner-br::before { width: 20px; height: 1px; bottom: 0; right: 0; }
+.corner-br::after { width: 1px; height: 20px; bottom: 0; right: 0; }
+
+/* ===== LAYOUT ===== */
+.launcher {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 10;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  height: 100%;
+  background: linear-gradient(180deg,
+    rgba(12, 12, 15, 0.97) 0%,
+    rgba(16, 16, 20, 0.98) 100%
+  );
+  border-right: 1px solid var(--border-gold);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  position: relative;
+  z-index: 20;
+}
+
+/* Sidebar wood texture */
+.sidebar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent,
+      transparent 8px,
+      rgba(240, 208, 128, 0.008) 8px,
+      rgba(240, 208, 128, 0.008) 9px
+    );
+  pointer-events: none;
+}
+
+/* Logo section */
+.logo-section {
+  padding: 24px 20px 20px;
+  text-align: center;
+  border-bottom: 1px solid var(--border-gold);
+  position: relative;
+}
+
+.logo-emblem {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 12px;
+  position: relative;
+}
+
+/* Konoha leaf symbol */
+.konoha-symbol {
+  width: 64px;
+  height: 64px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.konoha-symbol svg {
+  width: 56px;
+  height: 56px;
+  filter: drop-shadow(0 0 8px var(--chakra-orange-glow));
+}
+
+.logo-emblem::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid rgba(232, 130, 10, 0.15);
+  animation: sealRotate 30s linear infinite;
+}
+
+.logo-title {
+  font-family: var(--font-epic);
+  font-weight: 900;
+  font-size: 20px;
+  letter-spacing: 4px;
+  color: var(--text-primary);
+  line-height: 1.1;
+  text-shadow: 0 0 20px rgba(232, 130, 10, 0.2);
+}
+
+.logo-title .v2 {
+  color: var(--chakra-orange);
+  font-size: 16px;
+  display: inline-block;
+  margin-left: 4px;
+  text-shadow: 0 0 15px var(--chakra-orange-glow);
+}
+
+.logo-subtitle {
+  font-family: var(--font-system);
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* Navigation */
+.nav {
+  flex: 1;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+  border: 1px solid transparent;
+}
+
+.nav-item:hover {
+  background: rgba(232, 130, 10, 0.06);
+  color: var(--text-primary);
+  border-color: rgba(232, 130, 10, 0.1);
+}
+
+.nav-item.active {
+  background: rgba(232, 130, 10, 0.08);
+  color: var(--chakra-orange);
+  border-color: rgba(232, 130, 10, 0.15);
+  box-shadow: 0 0 20px rgba(232, 130, 10, 0.05);
+}
+
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 60%;
+  background: var(--chakra-orange);
+  border-radius: 0 2px 2px 0;
+  box-shadow: 0 0 8px var(--chakra-orange-glow);
+}
+
+.nav-icon {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+}
+
+.nav-item.active .nav-icon,
+.nav-item:hover .nav-icon {
+  opacity: 1;
+}
+
+.nav-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Server status card */
+.server-status {
+  margin: 0 12px 16px;
+  padding: 14px 16px;
+  background: var(--black-card);
+  border-radius: 10px;
+  border: 1px solid var(--border-gold);
+  position: relative;
+  overflow: hidden;
+}
+
+.server-status::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(232, 130, 10, 0.3),
+    transparent
+  );
+}
+
+.status-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background: #27ae60;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(39, 174, 96, 0.5);
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+  0%, 100% { box-shadow: 0 0 4px rgba(39, 174, 96, 0.3); }
+  50% { box-shadow: 0 0 12px rgba(39, 174, 96, 0.7); }
+}
+
+.status-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #27ae60;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.status-details {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+}
+
+.status-row .label {
+  color: var(--text-muted);
+}
+
+.status-row .value {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.status-row .value.players {
+  color: var(--chakra-orange);
+}
+
+/* ===== MAIN AREA ===== */
+.main-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Title bar */
+.title-bar {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 8px;
+  background: rgba(10, 10, 12, 0.8);
+  border-bottom: 1px solid rgba(240, 208, 128, 0.06);
+  gap: 2px;
+  -webkit-app-region: drag;
+  position: relative;
+  z-index: 30;
+}
+
+.title-bar-text {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-family: var(--font-system);
+}
+
+.window-btn {
+  width: 28px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s;
+  -webkit-app-region: no-drag;
+}
+
+.window-btn svg {
+  width: 12px;
+  height: 12px;
+  stroke: var(--text-muted);
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.window-btn:hover svg { stroke: var(--text-primary); }
+.window-btn.minimize:hover { background: rgba(255,255,255,0.06); }
+.window-btn.close:hover { background: rgba(192, 57, 43, 0.4); }
+.window-btn.close:hover svg { stroke: #ff6b6b; }
+
+/* Content area */
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0;
+}
+
+/* Scrollbar */
+.content::-webkit-scrollbar { width: 4px; }
+.content::-webkit-scrollbar-track { background: transparent; }
+.content::-webkit-scrollbar-thumb {
+  background: rgba(232, 130, 10, 0.2);
+  border-radius: 4px;
+}
+.content::-webkit-scrollbar-thumb:hover { background: rgba(232, 130, 10, 0.4); }
+
+/* Banner */
+.banner {
+  position: relative;
+  height: 180px;
+  min-height: 180px;
+  overflow: hidden;
+  background: linear-gradient(135deg,
+    rgba(20, 15, 10, 0.95) 0%,
+    rgba(40, 25, 10, 0.9) 40%,
+    rgba(60, 30, 10, 0.85) 70%,
+    rgba(30, 15, 8, 0.95) 100%
+  );
+}
+
+/* Banner mountain art */
+.banner-mountains {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+}
+
+/* Hokage mountain silhouettes */
+.banner-mountains::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: var(--black-deep);
+  clip-path: polygon(
+    0% 100%,
+    0% 70%,
+    3% 65%,
+    8% 55%,
+    12% 50%,
+    15% 55%,
+    18% 45%,
+    22% 40%,
+    25% 45%,
+    28% 35%,
+    32% 30%,
+    35% 35%,
+    38% 32%,
+    42% 28%,
+    45% 35%,
+    48% 30%,
+    52% 25%,
+    55% 30%,
+    58% 28%,
+    62% 35%,
+    65% 32%,
+    68% 40%,
+    72% 35%,
+    75% 42%,
+    78% 38%,
+    82% 45%,
+    85% 50%,
+    88% 45%,
+    92% 55%,
+    95% 50%,
+    98% 60%,
+    100% 55%,
+    100% 100%
+  );
+  opacity: 0.5;
+}
+
+/* Orange battle sky */
+.banner-sky {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 120% at 50% -20%, rgba(232, 130, 10, 0.2) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 30% 20%, rgba(192, 57, 43, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 60% at 70% 30%, rgba(232, 130, 10, 0.1) 0%, transparent 50%);
+}
+
+/* Ninja silhouettes */
+.ninja-silhouettes {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+  opacity: 0.12;
+}
+
+.ninja-figure {
+  width: 30px;
+  height: 60px;
+  background: var(--black-deep);
+  clip-path: polygon(
+    50% 0%,
+    35% 15%,
+    25% 15%,
+    15% 25%,
+    20% 40%,
+    30% 45%,
+    35% 60%,
+    30% 100%,
+    40% 95%,
+    50% 100%,
+    60% 95%,
+    70% 100%,
+    65% 60%,
+    70% 45%,
+    80% 40%,
+    85% 25%,
+    75% 15%,
+    65% 15%
+  );
+}
+
+.ninja-figure:nth-child(2) {
+  transform: scaleX(-1);
+  margin-top: 10px;
+}
+
+.ninja-figure:nth-child(3) {
+  margin-top: 5px;
+}
+
+/* Banner text */
+.banner-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+.banner-title {
+  font-family: var(--font-epic);
+  font-weight: 900;
+  font-size: 42px;
+  letter-spacing: 8px;
+  color: var(--text-primary);
+  text-shadow:
+    0 0 40px var(--chakra-orange-glow),
+    0 0 80px rgba(232, 130, 10, 0.15),
+    0 2px 4px rgba(0, 0, 0, 0.8);
+  position: relative;
+  animation: titleGlow 4s ease-in-out infinite;
+}
+
+.banner-title .v2-banner {
+  color: var(--chakra-orange);
+  text-shadow:
+    0 0 30px var(--chakra-orange-glow),
+    0 0 60px rgba(232, 130, 10, 0.2);
+}
+
+@keyframes titleGlow {
+  0%, 100% { text-shadow: 0 0 40px var(--chakra-orange-glow), 0 0 80px rgba(232, 130, 10, 0.15), 0 2px 4px rgba(0,0,0,0.8); }
+  50% { text-shadow: 0 0 60px var(--chakra-orange-glow), 0 0 100px rgba(232, 130, 10, 0.25), 0 2px 4px rgba(0,0,0,0.8); }
+}
+
+.banner-subtitle {
+  font-family: var(--font-system);
+  font-size: 12px;
+  letter-spacing: 6px;
+  color: var(--gold-aged);
+  text-transform: uppercase;
+  margin-top: 6px;
+  opacity: 0.7;
+}
+
+.banner-badges {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.badge {
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border: 1px solid;
+}
+
+.badge-version {
+  background: rgba(232, 130, 10, 0.1);
+  color: var(--chakra-orange);
+  border-color: rgba(232, 130, 10, 0.25);
+}
+
+.badge-forge {
+  background: rgba(240, 208, 128, 0.06);
+  color: var(--gold-aged);
+  border-color: rgba(240, 208, 128, 0.15);
+}
+
+/* Banner bottom gradient */
+.banner::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to top, var(--black-deep), transparent);
+  z-index: 4;
+}
+
+/* ===== CONTENT GRID ===== */
+.content-grid {
+  display: flex;
+  gap: 16px;
+  padding: 20px 20px 16px;
+  flex: 1;
+}
+
+/* News section */
+.news-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.section-title {
+  font-family: var(--font-epic);
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--gold-aged);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border-gold), transparent);
+}
+
+.news-card {
+  background: var(--black-card);
+  border: 1px solid rgba(240, 208, 128, 0.06);
+  border-radius: 8px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.news-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    var(--border-gold),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.news-card:hover {
+  background: var(--black-elevated);
+  border-color: rgba(232, 130, 10, 0.15);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.news-card:hover::before { opacity: 1; }
+
+.news-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.news-tag {
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.news-tag.update {
+  background: rgba(232, 130, 10, 0.15);
+  color: var(--chakra-orange);
+}
+
+.news-tag.event {
+  background: rgba(192, 57, 43, 0.15);
+  color: #e74c3c;
+}
+
+.news-tag.patch {
+  background: rgba(39, 174, 96, 0.15);
+  color: #27ae60;
+}
+
+.news-date {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+.news-title-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+  margin-bottom: 4px;
+}
+
+.news-desc {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* Stats panel */
+.stats-panel {
+  width: 170px;
+  min-width: 170px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stat-card {
+  background: var(--black-card);
+  border: 1px solid rgba(240, 208, 128, 0.06);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.stat-label {
+  font-size: 9px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 4px;
+}
+
+.stat-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.stat-value.orange { color: var(--chakra-orange); }
+.stat-value.gold { color: var(--gold-aged); }
+
+/* ===== BOTTOM LAUNCH BAR ===== */
+.launch-bar {
+  height: 72px;
+  min-height: 72px;
+  background: linear-gradient(180deg,
+    rgba(16, 16, 20, 0.95) 0%,
+    rgba(12, 12, 15, 0.98) 100%
+  );
+  border-top: 1px solid var(--border-gold);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 16px;
+  position: relative;
+  z-index: 30;
+}
+
+.launch-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(232, 130, 10, 0.3),
+    transparent
+  );
+}
+
+/* Profile selector */
+.profile-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px 6px 6px;
+  background: var(--black-card);
+  border: 1px solid rgba(240, 208, 128, 0.08);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  min-width: 160px;
+}
+
+.profile-selector:hover {
+  border-color: rgba(232, 130, 10, 0.2);
+  background: var(--black-elevated);
+}
+
+.profile-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, var(--chakra-orange), #d4740a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  image-rendering: pixelated;
+}
+
+.profile-avatar-img {
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+
+/* Minecraft skin pixel art (simplified ninja head) */
+.skin-pixels {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  width: 100%;
+  height: 100%;
+}
+
+.skin-pixels .px {
+  width: 100%;
+  height: 100%;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.profile-label {
+  font-size: 9px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.profile-arrow {
+  margin-left: auto;
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
+/* RAM slider */
+.ram-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 140px;
+}
+
+.ram-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ram-label span {
+  font-size: 9px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.ram-value {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--chakra-orange) !important;
+}
+
+.ram-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: var(--black-card);
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+  border: 1px solid rgba(240, 208, 128, 0.08);
+}
+
+.ram-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: var(--chakra-orange);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 10px var(--chakra-orange-glow);
+  transition: box-shadow 0.3s;
+}
+
+.ram-slider::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 18px var(--chakra-orange-glow);
+}
+
+.ram-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--chakra-orange);
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 10px var(--chakra-orange-glow);
+}
+
+/* PLAY BUTTON */
+.play-btn {
+  flex: 1;
+  max-width: 220px;
+  height: 46px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, #e07808 0%, var(--chakra-orange) 40%, #f5a623 100%);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  box-shadow:
+    0 0 20px rgba(232, 130, 10, 0.3),
+    0 0 40px rgba(232, 130, 10, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.play-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+}
+
+.play-btn::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--chakra-orange), #f5a623, var(--chakra-orange));
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s;
+  animation: playBtnPulse 3s ease-in-out infinite;
+}
+
+@keyframes playBtnPulse {
+  0%, 100% { opacity: 0; box-shadow: 0 0 20px rgba(232, 130, 10, 0.2); }
+  50% { opacity: 0.3; box-shadow: 0 0 30px rgba(232, 130, 10, 0.4); }
+}
+
+.play-btn:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 30px rgba(232, 130, 10, 0.5),
+    0 0 60px rgba(232, 130, 10, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.play-btn:active {
+  transform: translateY(1px);
+  box-shadow:
+    0 0 15px rgba(232, 130, 10, 0.3),
+    inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Kunai icon */
+.play-icon {
+  width: 20px;
+  height: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.play-icon svg {
+  width: 20px;
+  height: 20px;
+  fill: rgba(0, 0, 0, 0.7);
+}
+
+.play-text {
+  font-family: var(--font-epic);
+  font-weight: 900;
+  font-size: 18px;
+  letter-spacing: 6px;
+  color: rgba(0, 0, 0, 0.8);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+/* Shimmer effect */
+.play-btn .shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.15) 45%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(255, 255, 255, 0.15) 55%,
+    transparent 60%
+  );
+  animation: shimmer 4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-150%); }
+  40%, 100% { transform: translateX(150%); }
+}
+
+/* ===== LOADING STATE ===== */
+.play-btn.loading {
+  pointer-events: none;
+}
+
+.play-btn.loading .play-text {
+  opacity: 0;
+}
+
+.play-btn.loading .play-icon {
+  opacity: 0;
+}
+
+.play-btn.loading .shimmer {
+  display: none;
+}
+
+.loading-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  width: 0%;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 0 0 8px 8px;
+  transition: width 0.4s ease;
+  display: none;
+}
+
+.play-btn.loading .loading-bar {
+  display: block;
+}
+
+.loading-text {
+  position: absolute;
+  font-family: var(--font-system);
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.7);
+  letter-spacing: 2px;
+  display: none;
+}
+
+.play-btn.loading .loading-text {
+  display: block;
+}
+
+/* Status bar above launch bar */
+.status-message-bar {
+  height: 0;
+  overflow: hidden;
+  background: rgba(232, 130, 10, 0.06);
+  border-top: 1px solid rgba(232, 130, 10, 0.1);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  transition: height 0.3s ease;
+}
+
+.status-message-bar.visible {
+  height: 28px;
+}
+
+.status-message-text {
+  font-size: 11px;
+  color: var(--chakra-orange);
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.status-message-text.error {
+  color: #e74c3c;
+}
+
+/* Editable username */
+.profile-name-input {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-primary);
+  font-family: var(--font-system);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 4px;
+  border-radius: 4px;
+  width: 100px;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.profile-name-input:hover {
+  border-color: rgba(240, 208, 128, 0.15);
+}
+
+.profile-name-input:focus {
+  border-color: var(--chakra-orange);
+  background: var(--black-elevated);
+  box-shadow: 0 0 8px rgba(232, 130, 10, 0.15);
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.news-card { animation: fadeIn 0.5s ease forwards; }
+.news-card:nth-child(2) { animation-delay: 0.1s; }
+.news-card:nth-child(3) { animation-delay: 0.2s; }
+.news-card:nth-child(4) { animation-delay: 0.3s; }
+
+/* ===== RESPONSIVE GLOW EFFECTS ===== */
+.glow-line {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    var(--chakra-orange-glow),
+    transparent
+  );
+  animation: glowPulse 4s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+/* ===== WELCOME SCREEN ===== */
+.welcome-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--black-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.welcome-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(1.05);
+}
+
+.welcome-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  position: relative;
+  z-index: 2;
+  animation: welcomeFadeIn 1s ease forwards;
+}
+
+@keyframes welcomeFadeIn {
+  from { opacity: 0; transform: translateY(30px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Large seal circle behind the form */
+.welcome-seal {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  border: 1px solid rgba(232, 130, 10, 0.08);
+  animation: sealRotate 50s linear infinite;
+  pointer-events: none;
+}
+
+.welcome-seal::before {
+  content: '';
+  position: absolute;
+  inset: 20px;
+  border-radius: 50%;
+  border: 1px dashed rgba(240, 208, 128, 0.06);
+  animation: sealRotate 35s linear infinite reverse;
+}
+
+.welcome-seal::after {
+  content: '';
+  position: absolute;
+  inset: 45px;
+  border-radius: 50%;
+  border: 1px solid rgba(232, 130, 10, 0.05);
+  animation: sealRotate 25s linear infinite;
+}
+
+.welcome-seal-inner {
+  position: absolute;
+  inset: 70px;
+  border-radius: 50%;
+  border: 1px dotted rgba(240, 208, 128, 0.04);
+  animation: sealRotate 20s linear infinite reverse;
+}
+
+.welcome-seal-rune {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.welcome-seal-rune::before,
+.welcome-seal-rune::after {
+  content: '';
+  position: absolute;
+  background: rgba(232, 130, 10, 0.04);
+}
+
+.welcome-seal-rune::before {
+  width: 1px;
+  height: 100%;
+  left: 50%;
+}
+
+.welcome-seal-rune::after {
+  width: 100%;
+  height: 1px;
+  top: 50%;
+}
+
+/* Konoha emblem large */
+.welcome-emblem {
+  width: 100px;
+  height: 100px;
+  position: relative;
+}
+
+.welcome-emblem svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 20px var(--chakra-orange-glow));
+}
+
+.welcome-emblem::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 1px solid rgba(232, 130, 10, 0.2);
+  animation: sealRotate 20s linear infinite;
+}
+
+.welcome-title {
+  font-family: var(--font-epic);
+  font-weight: 900;
+  font-size: 36px;
+  letter-spacing: 6px;
+  color: var(--text-primary);
+  text-shadow: 0 0 40px var(--chakra-orange-glow);
+  text-align: center;
+}
+
+.welcome-title .w-v2 {
+  color: var(--chakra-orange);
+  text-shadow: 0 0 30px var(--chakra-orange-glow);
+}
+
+.welcome-subtitle {
+  font-family: var(--font-system);
+  font-size: 13px;
+  color: var(--text-secondary);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-top: -12px;
+}
+
+.welcome-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 320px;
+}
+
+.welcome-label {
+  font-family: var(--font-epic);
+  font-size: 12px;
+  color: var(--gold-aged);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.welcome-input {
+  width: 100%;
+  padding: 14px 20px;
+  background: rgba(22, 22, 26, 0.9);
+  border: 1px solid rgba(232, 130, 10, 0.2);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-family: var(--font-system);
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 2px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.welcome-input::placeholder {
+  color: var(--text-muted);
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+.welcome-input:focus {
+  border-color: var(--chakra-orange);
+  box-shadow: 0 0 20px rgba(232, 130, 10, 0.15), inset 0 0 20px rgba(232, 130, 10, 0.03);
+}
+
+.welcome-hint {
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+.welcome-btn {
+  width: 100%;
+  padding: 14px 24px;
+  margin-top: 8px;
+  background: linear-gradient(135deg, #e07808 0%, var(--chakra-orange) 40%, #f5a623 100%);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: var(--font-epic);
+  font-weight: 900;
+  font-size: 16px;
+  letter-spacing: 5px;
+  color: rgba(0, 0, 0, 0.8);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 25px rgba(232, 130, 10, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.welcome-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px rgba(232, 130, 10, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.welcome-btn:active {
+  transform: translateY(1px);
+}
+
+.welcome-btn .shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.15) 45%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0.15) 55%, transparent 60%);
+  animation: shimmer 4s ease-in-out infinite;
+}
+
+.welcome-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Background kanji for welcome */
+.welcome-bg-kanji {
+  position: absolute;
+  font-family: var(--font-jp);
+  font-weight: 900;
+  color: var(--gold-aged);
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.welcome-bg-kanji.k1 { font-size: 300px; top: -80px; left: -100px; animation: kanjiFloat1 18s ease-in-out infinite; }
+.welcome-bg-kanji.k2 { font-size: 250px; bottom: -60px; right: -80px; animation: kanjiFloat2 22s ease-in-out infinite; }
+
+/* Golden border for welcome */
+.welcome-overlay .launcher-border {
+  position: absolute;
+}
+/* ===== TAB PANELS ===== */
+.tab-panel { display: none; flex-direction: column; flex: 1; overflow-y: auto; overflow-x: hidden; }
+.tab-panel.active { display: flex; }
+.tab-panel::-webkit-scrollbar { width: 4px; }
+.tab-panel::-webkit-scrollbar-track { background: transparent; }
+.tab-panel::-webkit-scrollbar-thumb { background: rgba(232,130,10,0.2); border-radius: 4px; }
+
+.panel-page { padding: 24px; flex: 1; }
+.panel-title { font-family: var(--font-epic); font-size: 18px; letter-spacing: 3px; color: var(--gold-aged); margin-bottom: 20px; text-transform: uppercase; }
+.panel-group { background: var(--black-card); border: 1px solid rgba(240,208,128,0.06); border-radius: 10px; padding: 4px 0; margin-bottom: 16px; }
+.panel-group-title { font-family: var(--font-epic); font-size: 10px; letter-spacing: 2px; color: var(--text-muted); text-transform: uppercase; padding: 12px 18px 6px; }
+.panel-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 18px; border-bottom: 1px solid rgba(240,208,128,0.04); }
+.panel-row:last-child { border-bottom: none; }
+.setting-label { font-size: 13px; font-weight: 500; color: var(--text-primary); margin-bottom: 2px; }
+.setting-desc { font-size: 10px; color: var(--text-muted); }
+.setting-value { font-size: 13px; font-weight: 600; color: var(--text-secondary); white-space: nowrap; }
+
+.setting-select {
+  background: var(--black-elevated); border: 1px solid rgba(240,208,128,0.1); color: var(--text-primary);
+  font-family: var(--font-system); font-size: 12px; padding: 6px 12px; border-radius: 6px; outline: none; cursor: pointer;
+}
+.setting-select:focus { border-color: var(--chakra-orange); }
+
+.setting-toggle { position: relative; width: 40px; height: 22px; cursor: pointer; }
+.setting-toggle input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+  position: absolute; inset: 0; background: var(--black-elevated); border: 1px solid rgba(240,208,128,0.1);
+  border-radius: 11px; transition: all 0.3s;
+}
+.toggle-slider::before {
+  content: ''; position: absolute; width: 16px; height: 16px; left: 2px; top: 2px;
+  background: var(--text-muted); border-radius: 50%; transition: all 0.3s;
+}
+.setting-toggle input:checked + .toggle-slider { background: rgba(232,130,10,0.2); border-color: var(--chakra-orange); }
+.setting-toggle input:checked + .toggle-slider::before { transform: translateX(18px); background: var(--chakra-orange); }
+
+.btn-secondary {
+  background: transparent; border: 1px solid rgba(232,130,10,0.3); color: var(--chakra-orange);
+  font-family: var(--font-system); font-size: 11px; font-weight: 600; padding: 6px 14px;
+  border-radius: 6px; cursor: pointer; transition: all 0.3s; letter-spacing: 0.5px;
+}
+.btn-secondary:hover { background: rgba(232,130,10,0.1); border-color: var(--chakra-orange); }
+
+.mod-item {
+  display: flex; align-items: center; gap: 14px; padding: 12px 16px;
+  background: var(--black-card); border: 1px solid rgba(240,208,128,0.06); border-radius: 8px; margin-bottom: 8px;
+  transition: all 0.3s;
+}
+.mod-item:hover { border-color: rgba(232,130,10,0.15); background: var(--black-elevated); }
+.mod-icon {
+  width: 36px; height: 36px; border-radius: 6px; background: rgba(232,130,10,0.08);
+  display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;
+}
+.mod-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.mod-meta { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+.mod-empty { text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 13px; line-height: 1.6; }
+
+.about-header { text-align: center; padding: 20px 0 24px; }
+.about-logo { font-family: var(--font-jp); font-size: 64px; color: var(--chakra-orange); opacity: 0.3; margin-bottom: 8px; text-shadow: 0 0 30px var(--chakra-orange-glow); }
+
+.launch-bar.hidden { display: none; }
+
+/* ===== SERVER IP INPUT ===== */
+.setting-ip-input {
+  background: var(--black-elevated);
+  border: 1px solid rgba(240, 208, 128, 0.1);
+  color: var(--text-primary);
+  font-family: var(--font-system);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  outline: none;
+  width: 180px;
+  transition: all 0.3s;
+  letter-spacing: 0.5px;
+}
+
+.setting-ip-input:focus {
+  border-color: var(--chakra-orange);
+  box-shadow: 0 0 8px rgba(232, 130, 10, 0.15);
+}
+
+.setting-ip-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-save-ip {
+  background: rgba(232, 130, 10, 0.1);
+  border: 1px solid rgba(232, 130, 10, 0.3);
+  color: var(--chakra-orange);
+  font-family: var(--font-system);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.btn-save-ip:hover {
+  background: rgba(232, 130, 10, 0.2);
+  border-color: var(--chakra-orange);
+  box-shadow: 0 0 10px rgba(232, 130, 10, 0.2);
+}
+
+.ip-saved-msg {
+  font-size: 10px;
+  color: #27ae60;
+  opacity: 0;
+  transition: opacity 0.3s;
+  letter-spacing: 0.5px;
+}
+
+.ip-saved-msg.visible {
+  opacity: 1;
+}
+.status-message-bar.hidden-tab { display: none; }
+
+/* ===== SIDEBAR LOGO IMAGE ===== */
+.logo-icon-img {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px var(--chakra-orange-glow));
+  border-radius: 50%;
+}
+
+/* ===== CHANGE NICK BUTTON ===== */
+.btn-change-nick {
+  background: rgba(232, 130, 10, 0.06);
+  border: 1px solid rgba(232, 130, 10, 0.25);
+  color: var(--chakra-orange);
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  font-family: var(--font-system);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.btn-change-nick:hover {
+  background: rgba(232, 130, 10, 0.15);
+  border-color: var(--chakra-orange);
+  box-shadow: 0 0 16px rgba(232, 130, 10, 0.25);
+  transform: translateY(-1px);
+}
+
+.btn-change-nick:active {
+  transform: translateY(1px);
+}
+
+.btn-change-nick svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+}
+
+/* ===== NICKNAME MODAL ===== */
+.nick-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+.nick-modal-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nick-modal {
+  background: var(--black-card);
+  border: 1px solid rgba(232, 130, 10, 0.2);
+  border-radius: 14px;
+  padding: 32px 36px;
+  width: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  transform: scale(0.9) translateY(20px);
+  transition: transform 0.3s ease;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(232, 130, 10, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.nick-modal-overlay.visible .nick-modal {
+  transform: scale(1) translateY(0);
+}
+
+.nick-modal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(232, 130, 10, 0.4), transparent);
+}
+
+.nick-modal-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(232, 130, 10, 0.08);
+  border: 1px solid rgba(232, 130, 10, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nick-modal-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--chakra-orange);
+  stroke-width: 2;
+  fill: none;
+}
+
+.nick-modal-title {
+  font-family: var(--font-epic);
+  font-size: 16px;
+  letter-spacing: 3px;
+  color: var(--gold-aged);
+  text-transform: uppercase;
+  margin-top: -4px;
+}
+
+.nick-modal-input {
+  width: 100%;
+  padding: 12px 18px;
+  background: rgba(22, 22, 26, 0.9);
+  border: 1px solid rgba(232, 130, 10, 0.15);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-family: var(--font-system);
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 2px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.nick-modal-input:focus {
+  border-color: var(--chakra-orange);
+  box-shadow: 0 0 16px rgba(232, 130, 10, 0.15), inset 0 0 16px rgba(232, 130, 10, 0.03);
+}
+
+.nick-modal-input::placeholder {
+  color: var(--text-muted);
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+.nick-modal-hint {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: -10px;
+}
+
+.nick-modal-actions {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.nick-modal-btn {
+  flex: 1;
+  padding: 11px 16px;
+  border-radius: 8px;
+  font-family: var(--font-epic);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+.nick-modal-btn.cancel {
+  background: transparent;
+  border: 1px solid rgba(240, 208, 128, 0.12);
+  color: var(--text-secondary);
+}
+
+.nick-modal-btn.cancel:hover {
+  background: rgba(240, 208, 128, 0.05);
+  border-color: rgba(240, 208, 128, 0.25);
+  color: var(--text-primary);
+}
+
+.nick-modal-btn.confirm {
+  background: linear-gradient(135deg, #e07808 0%, var(--chakra-orange) 40%, #f5a623 100%);
+  border: none;
+  color: rgba(0, 0, 0, 0.8);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 16px rgba(232, 130, 10, 0.25);
+}
+
+.nick-modal-btn.confirm:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 24px rgba(232, 130, 10, 0.4);
+}
+
+.nick-modal-btn.confirm:active {
+  transform: translateY(1px);
+}
+
+.nick-modal-btn.confirm:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Profile avatar with custom icon */
+.profile-avatar-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+  image-rendering: auto;
+}
+/* ===== AUTO UPDATER BANNER ===== */
+.update-banner {
+  background: var(--black-elevated);
+  border-top: 1px solid rgba(232, 130, 10, 0.2);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transform: translateY(100%);
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  position: relative;
+  z-index: 29;
+}
+
+.update-banner.visible {
+  transform: translateY(0);
+  opacity: 1;
+  height: 60px;
+}
+
+.update-icon {
+  font-size: 20px;
+}
+
+.update-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.update-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--chakra-orange);
+  letter-spacing: 0.5px;
+}
+
+.update-progress-bg {
+  width: 100%;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.update-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--chakra-orange), #f5a623);
+  transition: width 0.3s ease;
+}
+
+.btn-install-update {
+  background: linear-gradient(135deg, #e07808 0%, var(--chakra-orange) 40%, #f5a623 100%);
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-family: var(--font-epic);
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(0,0,0,0.8);
+  cursor: pointer;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.3s;
+}
+
+.btn-install-update.hidden {
+  display: none;
+}
+
+.btn-install-update:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 12px rgba(232, 130, 10, 0.4);
+}
+</style>
+</head>
+<body>
+
+<!-- ===== WELCOME SCREEN (first time) ===== -->
+<div class="welcome-overlay" id="welcome-overlay">
+  <!-- Background decorations -->
+  <div class="welcome-bg-kanji k1">忍</div>
+  <div class="welcome-bg-kanji k2">火</div>
+  <div class="launcher-border"></div>
+
+  <!-- Seal circle -->
+  <div class="welcome-seal">
+    <div class="welcome-seal-inner"></div>
+    <div class="welcome-seal-rune"></div>
+    <div class="welcome-seal-rune" style="transform: rotate(45deg)"></div>
+    <div class="welcome-seal-rune" style="transform: rotate(22.5deg)"></div>
+    <div class="welcome-seal-rune" style="transform: rotate(67.5deg)"></div>
+  </div>
+
+  <div class="welcome-card">
+    <!-- Konoha emblem -->
+    <div class="welcome-emblem">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(232,130,10,0.3)" stroke-width="1"/>
+        <circle cx="50" cy="50" r="36" fill="none" stroke="rgba(232,130,10,0.15)" stroke-width="0.5" stroke-dasharray="3 3"/>
+        <path d="M50 20 C65 20, 78 33, 78 48 C78 58, 72 66, 62 68 C55 70, 48 65, 48 58 C48 53, 52 50, 56 50 C58 50, 60 52, 58 54" fill="none" stroke="#E8820A" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M50 15 L50 8" stroke="#E8820A" stroke-width="2" stroke-linecap="round"/>
+        <path d="M50 8 L46 14" stroke="#E8820A" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <div class="welcome-title">HIDDEN WAR <span class="w-v2">V2</span></div>
+    <p class="welcome-subtitle">Naruto RP Experience</p>
+
+    <div class="welcome-form">
+      <label class="welcome-label">Escolha seu nome ninja</label>
+      <input type="text" class="welcome-input" id="welcome-name" placeholder="Digite seu username..." maxlength="16" spellcheck="false" autocomplete="off">
+      <span class="welcome-hint">Máximo 16 caracteres — sem espaços</span>
+      <button class="welcome-btn" id="welcome-btn" disabled>
+        ENTRAR
+        <div class="shimmer"></div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Background layers -->
+<div class="bg-layer bg-parchment"></div>
+<div class="bg-layer bg-sky"></div>
+<div class="bg-layer bg-mountains"></div>
+
+<!-- Kanji watermarks -->
+<div class="kanji-watermark kanji-1">忍</div>
+<div class="kanji-watermark kanji-2">戦</div>
+<div class="kanji-watermark kanji-3">火</div>
+
+<!-- Seal circles -->
+<div class="seal-circle seal-circle-1">
+  <div class="seal-rune"></div>
+  <div class="seal-rune seal-rune-rotated"></div>
+</div>
+<div class="seal-circle seal-circle-2">
+  <div class="seal-rune"></div>
+</div>
+<div class="seal-circle seal-circle-3"></div>
+
+<!-- Chakra particles -->
+<div class="particles-container" id="particles"></div>
+
+<!-- Golden border -->
+<div class="launcher-border"></div>
+<div class="corner-ornament corner-tl"></div>
+<div class="corner-ornament corner-tr"></div>
+<div class="corner-ornament corner-bl"></div>
+<div class="corner-ornament corner-br"></div>
+
+<!-- Main launcher -->
+<div class="launcher">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="logo-section">
+      <div class="logo-emblem">
+        <div class="konoha-symbol">
+          <img src="assets/icon.png" alt="Hidden War V2" class="logo-icon-img">
+        </div>
+      </div>
+      <div class="logo-title">HIDDEN WAR<span class="v2">V2</span></div>
+      <div class="logo-subtitle">Naruto RP Server</div>
+    </div>
+
+    <nav class="nav" id="nav">
+      <div class="nav-item active" data-section="play" id="nav-play">
+        <div class="nav-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+          </svg>
+        </div>
+        <span>Jogar</span>
+      </div>
+      <div class="nav-item" data-section="mods" id="nav-mods">
+        <div class="nav-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+        </div>
+        <span>Mods</span>
+      </div>
+      <div class="nav-item" data-section="settings" id="nav-settings">
+        <div class="nav-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </div>
+        <span>Configurações</span>
+      </div>
+      <div class="nav-item" data-section="about" id="nav-about">
+        <div class="nav-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="16" x2="12" y2="12"/>
+            <line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+        </div>
+        <span>Sobre</span>
+      </div>
+    </nav>
+
+    <!-- Server Status -->
+    <div class="server-status" id="server-status">
+      <div class="status-header">
+        <div class="status-dot" id="status-dot"></div>
+        <span class="status-label">Online</span>
+      </div>
+      <div class="status-details">
+        <div class="status-row">
+          <span class="label">Jogadores</span>
+          <span class="value players" id="player-count">47/100</span>
+        </div>
+        <div class="status-row">
+          <span class="label">Ping</span>
+          <span class="value" id="ping-value">23ms</span>
+        </div>
+        <div class="status-row">
+          <span class="label">IP</span>
+          <span class="value" id="sidebar-ip">hiddenwar.srvmc.com</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main content area -->
+  <main class="main-area">
+    <!-- Title bar -->
+    <div class="title-bar">
+      <span class="title-bar-text">Hidden War V2 Launcher</span>
+      <button class="window-btn minimize" id="btn-minimize" title="Minimizar">
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <button class="window-btn close" id="btn-close" title="Fechar">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+
+      <!-- TAB: Jogar -->
+      <div class="tab-panel active" id="panel-play">
+        <div class="banner">
+          <div class="banner-sky"></div>
+          <div class="banner-mountains"></div>
+          <div class="ninja-silhouettes">
+            <div class="ninja-figure"></div>
+            <div class="ninja-figure"></div>
+            <div class="ninja-figure"></div>
+          </div>
+          <div class="banner-content">
+            <h1 class="banner-title">HIDDEN WAR <span class="v2-banner">V2</span></h1>
+            <p class="banner-subtitle">Naruto RP Experience</p>
+            <div class="banner-badges">
+              <span class="badge badge-version">1.12.2</span>
+              <span class="badge badge-forge">Forge</span>
+            </div>
+          </div>
+        </div>
+        <div class="content-grid">
+          <div class="news-section">
+            <div class="section-title">Novidades</div>
+            <div class="news-card" id="news-1">
+              <div class="news-card-header"><span class="news-tag update">UPDATE</span><span class="news-date">05 Jun 2026</span></div>
+              <div class="news-title-text">Nova Aldeia da Névoa Disponível</div>
+              <div class="news-desc">A Kirigakure foi completamente reconstruída com novas quests, NPCs e o sistema de névoa dinâmica.</div>
+            </div>
+            <div class="news-card" id="news-2">
+              <div class="news-card-header"><span class="news-tag event">EVENTO</span><span class="news-date">01 Jun 2026</span></div>
+              <div class="news-title-text">Exame Chunin — Temporada 4</div>
+              <div class="news-desc">Inscrições abertas para o torneio entre aldeias. Prêmios exclusivos e ranking global.</div>
+            </div>
+            <div class="news-card" id="news-3">
+              <div class="news-card-header"><span class="news-tag patch">PATCH</span><span class="news-date">28 Mai 2026</span></div>
+              <div class="news-title-text">Patch 2.4.1 — Correções de Jutsu</div>
+              <div class="news-desc">Balanceamento do Sharingan, fix no Rasengan e melhorias de performance do servidor.</div>
+            </div>
+          </div>
+          <div class="stats-panel">
+            <div class="section-title">Info</div>
+            <div class="stat-card"><div class="stat-label">Modpack</div><div class="stat-value orange">Hidden War v2.4.1</div></div>
+            <div class="stat-card"><div class="stat-label">Forge Build</div><div class="stat-value">14.23.5.2860</div></div>
+            <div class="stat-card"><div class="stat-label">RAM Alocada</div><div class="stat-value gold" id="stat-ram">4 GB</div></div>
+            <div class="stat-card"><div class="stat-label">Java</div><div class="stat-value">Temurin 1.8</div></div>
+            <div class="stat-card"><div class="stat-label">Mods Ativos</div><div class="stat-value orange" id="stat-mods">—</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: Mods -->
+      <div class="tab-panel" id="panel-mods">
+        <div class="panel-page">
+          <div class="panel-title">Mods Instalados</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+            <span style="font-size:12px;color:var(--text-secondary)">Pasta: <span style="color:var(--text-muted)">%APPDATA%\.hiddenwar\mods</span></span>
+            <button class="btn-secondary" id="btn-open-mods">📂 Abrir Pasta</button>
+          </div>
+          <div id="mods-list">
+            <div class="mod-empty" id="mods-empty">Carregando mods...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: Configurações -->
+      <div class="tab-panel" id="panel-settings">
+        <div class="panel-page">
+          <div class="panel-title">Configurações</div>
+          <div class="panel-group">
+            <div class="panel-group-title">Jogo</div>
+            <div class="panel-row">
+              <div><div class="setting-label">Memória RAM</div><div class="setting-desc">Quantidade de RAM alocada para o Minecraft</div></div>
+              <div style="display:flex;align-items:center;gap:12px;min-width:180px">
+                <input type="range" class="ram-slider" id="settings-ram" min="2" max="16" value="4" step="1" style="flex:1">
+                <span class="setting-value" id="settings-ram-val" style="color:var(--chakra-orange);min-width:40px">4 GB</span>
+              </div>
+            </div>
+            <div class="panel-row">
+              <div><div class="setting-label">Resolução</div><div class="setting-desc">Tamanho da janela do Minecraft</div></div>
+              <select class="setting-select" id="settings-resolution">
+                <option value="854x480">854 × 480</option>
+                <option value="1280x720" selected>1280 × 720</option>
+                <option value="1600x900">1600 × 900</option>
+                <option value="1920x1080">1920 × 1080</option>
+              </select>
+            </div>
+            <div class="panel-row">
+              <div><div class="setting-label">Fechar launcher ao iniciar</div><div class="setting-desc">Fecha o launcher quando o Minecraft abrir</div></div>
+              <label class="setting-toggle"><input type="checkbox" id="settings-close-on-launch"><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+          <div class="panel-group">
+            <div class="panel-group-title">Servidor</div>
+            <div class="panel-row">
+              <div><div class="setting-label">IP do Servidor</div><div class="setting-desc">Endereço IP ou domínio do servidor Minecraft</div></div>
+              <div class="setting-ip-row">
+                <input type="text" class="setting-ip-input" id="settings-server-ip" value="hiddenwar.srvmc.com" spellcheck="false" placeholder="servidor.com">
+                <button class="btn-save-ip" id="btn-save-ip">Salvar</button>
+                <span class="ip-saved-msg" id="ip-saved-msg">✓ Salvo</span>
+              </div>
+            </div>
+          </div>
+          <div class="panel-group">
+            <div class="panel-group-title">Diretórios</div>
+            <div class="panel-row">
+              <div><div class="setting-label">Pasta do jogo</div><div class="setting-desc">%APPDATA%\.hiddenwar</div></div>
+              <button class="btn-secondary" id="btn-open-gamedir">📂 Abrir</button>
+            </div>
+            <div class="panel-row">
+              <div><div class="setting-label">Java Runtime</div><div class="setting-desc">Temurin JRE 1.8 (automático)</div></div>
+              <span class="setting-value" style="color:#27ae60">✓ Instalado</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: Sobre -->
+      <div class="tab-panel" id="panel-about">
+        <div class="panel-page">
+          <div class="about-header">
+            <div class="about-logo">忍</div>
+            <div class="panel-title" style="font-size:28px;margin-bottom:4px">HIDDEN WAR <span style="color:var(--chakra-orange)">V2</span></div>
+            <div style="color:var(--text-secondary);letter-spacing:3px;font-size:11px;text-transform:uppercase">Naruto RP Experience</div>
+          </div>
+          <div class="panel-group">
+            <div class="panel-group-title">Informações</div>
+            <div class="panel-row"><div class="setting-label">Versão do Launcher</div><span class="setting-value">2.4.1</span></div>
+            <div class="panel-row"><div class="setting-label">Minecraft</div><span class="setting-value">1.12.2</span></div>
+            <div class="panel-row"><div class="setting-label">Forge</div><span class="setting-value">14.23.5.2860</span></div>
+            <div class="panel-row"><div class="setting-label">Electron</div><span class="setting-value">35.x</span></div>
+            <div class="panel-row"><div class="setting-label">MCLC</div><span class="setting-value">3.18.2</span></div>
+          </div>
+          <div class="panel-group">
+            <div class="panel-group-title">Servidor</div>
+            <div class="panel-row"><div class="setting-label">IP</div><span class="setting-value" style="color:var(--chakra-orange)">hiddenwar.srvmc.com</span></div>
+            <div class="panel-row"><div class="setting-label">Discord</div><span class="setting-value" style="color:var(--chakra-orange)">discord.gg/hiddenwar</span></div>
+            <div class="panel-row"><div class="setting-label">Website</div><span class="setting-value" style="color:var(--chakra-orange)">hiddenwar.com</span></div>
+          </div>
+          <div style="text-align:center;margin-top:16px;font-size:11px;color:var(--text-muted)">© 2026 Hidden War Team — Todos os direitos reservados</div>
+        </div>
+      </div>
+
+    </div>
+    
+    <!-- Auto-Updater Banner -->
+    <div class="update-banner" id="update-banner">
+      <div class="update-icon">📦</div>
+      <div class="update-info">
+        <div class="update-title" id="update-title">Buscando atualizações...</div>
+        <div class="update-progress-bg">
+          <div class="update-progress-fill" id="update-progress"></div>
+        </div>
+      </div>
+      <button class="btn-install-update hidden" id="btn-install-update">Instalar Agora</button>
+    </div>
+
+    <!-- Launch bar -->
+    <div class="launch-bar">
+      <!-- Profile -->
+      <div class="profile-selector" id="profile-selector">
+        <div class="profile-avatar">
+          <img src="assets/icon.png" alt="Avatar" class="profile-avatar-icon">
+        </div>
+        <div class="profile-info">
+          <input type="text" class="profile-name-input" id="username-input" value="NinjaPlayer" maxlength="16" spellcheck="false" placeholder="Username" readonly>
+          <span class="profile-label">Perfil Ativo</span>
+        </div>
+      </div>
+
+      <!-- Change Nick Button -->
+      <button class="btn-change-nick" id="btn-change-nick" title="Trocar Nickname">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+        </svg>
+        <span>TROCAR NICK</span>
+      </button>
+
+      <!-- RAM slider -->
+      <div class="ram-section">
+        <div class="ram-label">
+          <span>RAM</span>
+          <span class="ram-value" id="ram-display">4 GB</span>
+        </div>
+        <input type="range" class="ram-slider" id="ram-slider" min="2" max="16" value="4" step="1">
+      </div>
+
+      <!-- Play button -->
+      <button class="play-btn" id="play-btn">
+        <div class="play-icon">
+          <!-- Kunai icon -->
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L10 8L4 10L10 12L12 22L14 12L20 10L14 8L12 2Z" fill="rgba(0,0,0,0.7)"/>
+            <path d="M12 7L11.2 9.5L8.5 10L11.2 10.8L12 13.5L12.8 10.8L15.5 10L12.8 9.5L12 7Z" fill="rgba(0,0,0,0.3)"/>
+          </svg>
+        </div>
+        <span class="play-text">JOGAR</span>
+        <div class="shimmer"></div>
+        <div class="loading-bar"></div>
+        <span class="loading-text">CARREGANDO...</span>
+      </button>
+    </div>
+
+    <!-- Status message bar -->
+    <div class="status-message-bar" id="status-bar">
+      <span class="status-message-text" id="status-text"></span>
+    </div>
+  </main>
+</div>
+
+<!-- ===== NICKNAME CHANGE MODAL ===== -->
+<div class="nick-modal-overlay" id="nick-modal-overlay">
+  <div class="nick-modal">
+    <div class="nick-modal-icon">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+      </svg>
+    </div>
+    <div class="nick-modal-title">Trocar Nickname</div>
+    <input type="text" class="nick-modal-input" id="nick-modal-input" placeholder="Novo nickname..." maxlength="16" spellcheck="false" autocomplete="off">
+    <span class="nick-modal-hint">Máximo 16 caracteres — sem espaços</span>
+    <div class="nick-modal-actions">
+      <button class="nick-modal-btn cancel" id="nick-modal-cancel">Cancelar</button>
+      <button class="nick-modal-btn confirm" id="nick-modal-confirm" disabled>Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== WELCOME SCREEN LOGIC =====
+(async function initWelcome() {
+  const overlay = document.getElementById('welcome-overlay');
+  const welcomeInput = document.getElementById('welcome-name');
+  const welcomeBtn = document.getElementById('welcome-btn');
+
+  // Check if config exists (returning user)
+  if (window.electronAPI) {
+    const config = await window.electronAPI.readConfig();
+    if (config && config.username) {
+      // Returning user — skip welcome, set username
+      overlay.classList.add('hidden');
+      setTimeout(() => overlay.style.display = 'none', 700);
+      document.getElementById('username-input').value = config.username;
+      return;
+    }
+  } else {
+    // No Electron — hide welcome for browser preview
+    overlay.classList.add('hidden');
+    setTimeout(() => overlay.style.display = 'none', 700);
+    return;
+  }
+
+  // First time user — show welcome
+  welcomeInput.focus();
+
+  // Validate input
+  welcomeInput.addEventListener('input', () => {
+    const val = welcomeInput.value.replace(/\s/g, '');
+    welcomeInput.value = val;
+    welcomeBtn.disabled = val.length < 3;
+  });
+
+  // Enter key
+  welcomeInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !welcomeBtn.disabled) {
+      welcomeBtn.click();
+    }
+  });
+
+  // Submit
+  welcomeBtn.addEventListener('click', async () => {
+    const name = welcomeInput.value.trim();
+    if (name.length < 3) return;
+
+    // Save config
+    if (window.electronAPI) {
+      await window.electronAPI.saveConfig({ username: name, firstLaunch: false });
+    }
+
+    // Set username in main launcher
+    document.getElementById('username-input').value = name;
+
+    // Fade out welcome
+    overlay.classList.add('hidden');
+    setTimeout(() => overlay.style.display = 'none', 700);
+  });
+})();
+
+// ===== CHAKRA PARTICLES =====
+(function createParticles() {
+  const container = document.getElementById('particles');
+  const particleCount = 30;
+
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+
+    const left = 220 + Math.random() * 720;
+    const delay = Math.random() * 12;
+    const duration = 6 + Math.random() * 8;
+    const size = 2 + Math.random() * 3;
+    const drift = (Math.random() - 0.5) * 60;
+
+    particle.style.cssText = `
+      left: ${left}px;
+      bottom: ${-10 + Math.random() * 40}px;
+      width: ${size}px;
+      height: ${size}px;
+      animation-delay: ${delay}s;
+      animation-duration: ${duration}s;
+      --drift: ${drift}px;
+    `;
+
+    container.appendChild(particle);
+  }
+})();
+
+// ===== RAM SLIDER =====
+const ramSlider = document.getElementById('ram-slider');
+const ramDisplay = document.getElementById('ram-display');
+const statRam = document.getElementById('stat-ram');
+
+ramSlider.addEventListener('input', function() {
+  const val = this.value + ' GB';
+  ramDisplay.textContent = val;
+  statRam.textContent = val;
+
+  // Update slider fill
+  const pct = ((this.value - this.min) / (this.max - this.min)) * 100;
+  this.style.background = `linear-gradient(90deg, rgba(232,130,10,0.4) 0%, var(--chakra-orange) ${pct}%, var(--black-card) ${pct}%)`;
+});
+
+// Init slider fill
+(function() {
+  const pct = ((ramSlider.value - ramSlider.min) / (ramSlider.max - ramSlider.min)) * 100;
+  ramSlider.style.background = `linear-gradient(90deg, rgba(232,130,10,0.4) 0%, var(--chakra-orange) ${pct}%, var(--black-card) ${pct}%)`;
+})();
+
+// ===== NAVIGATION (tab switching) =====
+const navItems = document.querySelectorAll('.nav-item');
+const tabPanels = document.querySelectorAll('.tab-panel');
+const launchBar = document.querySelector('.launch-bar');
+const statusBarEl = document.getElementById('status-bar');
+
+const tabMap = { play: 'panel-play', mods: 'panel-mods', settings: 'panel-settings', about: 'panel-about' };
+
+function switchTab(section) {
+  // Nav active state
+  navItems.forEach(n => n.classList.remove('active'));
+  document.querySelector(`[data-section="${section}"]`).classList.add('active');
+  // Panel switching
+  tabPanels.forEach(p => p.classList.remove('active'));
+  const panel = document.getElementById(tabMap[section]);
+  if (panel) panel.classList.add('active');
+  // Show launch bar only on play tab
+  if (section === 'play') {
+    launchBar.classList.remove('hidden');
+    if (statusBarEl) statusBarEl.classList.remove('hidden-tab');
+  } else {
+    launchBar.classList.add('hidden');
+    if (statusBarEl) statusBarEl.classList.add('hidden-tab');
+  }
+  // Load mods list when switching to mods tab
+  if (section === 'mods') loadModsList();
+}
+
+navItems.forEach(item => {
+  item.addEventListener('click', function() {
+    switchTab(this.dataset.section);
+  });
+});
+
+// ===== MODS LIST =====
+async function loadModsList() {
+  if (!window.electronAPI) return;
+  const list = document.getElementById('mods-list');
+  const emptyEl = document.getElementById('mods-empty');
+  try {
+    const mods = await window.electronAPI.listMods();
+    const statMods = document.getElementById('stat-mods');
+    if (statMods) statMods.textContent = mods.length + ' mods';
+    if (mods.length === 0) {
+      list.innerHTML = '<div class="mod-empty">Nenhum mod instalado.<br>Coloque arquivos .jar na pasta mods para começar.</div>';
+      return;
+    }
+    list.innerHTML = mods.map(m => `
+      <div class="mod-item">
+        <div class="mod-icon">⚙️</div>
+        <div style="flex:1">
+          <div class="mod-name">${m.name}</div>
+          <div class="mod-meta">${m.file} — ${m.size} MB</div>
+        </div>
+      </div>
+    `).join('');
+  } catch (e) {
+    list.innerHTML = '<div class="mod-empty">Erro ao carregar mods.</div>';
+  }
+}
+
+// ===== OPEN FOLDER BUTTONS =====
+document.getElementById('btn-open-mods')?.addEventListener('click', () => {
+  if (window.electronAPI) window.electronAPI.openPath(null).then(() => {});
+  // openPath with null opens game dir; we need mods subdir
+  window.electronAPI?.getGameDir().then(dir => window.electronAPI.openPath(dir + '\\mods'));
+});
+document.getElementById('btn-open-gamedir')?.addEventListener('click', () => {
+  if (window.electronAPI) window.electronAPI.openPath(null);
+});
+
+// ===== SETTINGS RAM SYNC =====
+const settingsRam = document.getElementById('settings-ram');
+const settingsRamVal = document.getElementById('settings-ram-val');
+if (settingsRam) {
+  settingsRam.value = ramSlider.value;
+  const initPct = ((settingsRam.value - settingsRam.min) / (settingsRam.max - settingsRam.min)) * 100;
+  settingsRam.style.background = `linear-gradient(90deg, rgba(232,130,10,0.4) 0%, var(--chakra-orange) ${initPct}%, var(--black-card) ${initPct}%)`;
+  settingsRam.addEventListener('input', function() {
+    settingsRamVal.textContent = this.value + ' GB';
+    ramSlider.value = this.value;
+    ramSlider.dispatchEvent(new Event('input'));
+    const pct = ((this.value - this.min) / (this.max - this.min)) * 100;
+    this.style.background = `linear-gradient(90deg, rgba(232,130,10,0.4) 0%, var(--chakra-orange) ${pct}%, var(--black-card) ${pct}%)`;
+  });
+}
+
+// Load initial mods count
+if (window.electronAPI) { window.electronAPI.listMods().then(m => { const el = document.getElementById('stat-mods'); if (el) el.textContent = m.length + ' mods'; }); }
+
+// ===== PLAY BUTTON — REAL LAUNCH =====
+const playBtn = document.getElementById('play-btn');
+const loadingBar = playBtn.querySelector('.loading-bar');
+const loadingText = playBtn.querySelector('.loading-text');
+const statusBar = document.getElementById('status-bar');
+const statusText = document.getElementById('status-text');
+const usernameInput = document.getElementById('username-input');
+let isLaunching = false;
+
+function setStatus(msg, isError) {
+  statusText.textContent = msg;
+  statusText.classList.toggle('error', !!isError);
+  statusBar.classList.add('visible');
+}
+
+function clearStatus() {
+  statusBar.classList.remove('visible');
+}
+
+playBtn.addEventListener('click', async function() {
+  if (isLaunching) return;
+  if (!window.electronAPI) {
+    alert('Este botão só funciona no app Electron.\nRode com: npm start');
+    return;
+  }
+
+  const username = usernameInput.value.trim() || 'NinjaPlayer';
+  const ram = parseInt(ramSlider.value) || 4;
+
+  isLaunching = true;
+  playBtn.classList.add('loading');
+  loadingBar.style.width = '0%';
+  loadingText.textContent = 'PREPARANDO...';
+  setStatus('Iniciando download dos arquivos do Minecraft...');
+
+  try {
+    const result = await window.electronAPI.launch({ username, ram });
+    if (!result.success) {
+      setStatus('Erro: ' + result.message, true);
+    }
+  } catch (err) {
+    setStatus('Erro ao iniciar: ' + err.message, true);
+  }
+});
+
+// Listen for launch status events
+if (window.electronAPI) {
+  window.electronAPI.onLaunchStatus((data) => {
+    console.log('[Status]', data);
+    setStatus(data.message, data.status === 'error');
+
+    switch (data.status) {
+      case 'preparing':
+        loadingText.textContent = 'PREPARANDO...';
+        loadingBar.style.width = '5%';
+        break;
+      case 'downloading':
+        loadingText.textContent = 'BAIXANDO...';
+        break;
+      case 'launching':
+        loadingText.textContent = 'INICIANDO...';
+        loadingBar.style.width = '95%';
+        break;
+      case 'running':
+        loadingText.textContent = 'RODANDO';
+        loadingBar.style.width = '100%';
+        // Reset button after 3s
+        setTimeout(() => {
+          playBtn.classList.remove('loading');
+          isLaunching = false;
+          loadingBar.style.width = '0%';
+          setStatus('Minecraft está rodando! Bom jogo, ninja! 🎮');
+          setTimeout(clearStatus, 8000);
+        }, 2000);
+        break;
+      case 'closed':
+        playBtn.classList.remove('loading');
+        isLaunching = false;
+        loadingBar.style.width = '0%';
+        setStatus('Minecraft encerrado.');
+        setTimeout(clearStatus, 5000);
+        break;
+      case 'error':
+        playBtn.classList.remove('loading');
+        isLaunching = false;
+        loadingBar.style.width = '0%';
+        break;
+    }
+  });
+
+  window.electronAPI.onLaunchProgress((data) => {
+    const pct = Math.min(data.percent || 0, 90);
+    loadingBar.style.width = pct + '%';
+    loadingText.textContent = `BAIXANDO ${pct}%`;
+  });
+}
+
+// ===== CHANGE NICKNAME MODAL =====
+(function initNickModal() {
+  const btnChangeNick = document.getElementById('btn-change-nick');
+  const modalOverlay = document.getElementById('nick-modal-overlay');
+  const modalInput = document.getElementById('nick-modal-input');
+  const modalCancel = document.getElementById('nick-modal-cancel');
+  const modalConfirm = document.getElementById('nick-modal-confirm');
+
+  function openModal() {
+    modalInput.value = usernameInput.value || '';
+    modalOverlay.classList.add('visible');
+    setTimeout(() => modalInput.focus(), 100);
+    modalConfirm.disabled = modalInput.value.trim().length < 3;
+  }
+
+  function closeModal() {
+    modalOverlay.classList.remove('visible');
+  }
+
+  function confirmNick() {
+    const newName = modalInput.value.replace(/\s/g, '').trim();
+    if (newName.length < 3) return;
+    usernameInput.value = newName;
+    // Save to config
+    if (window.electronAPI) {
+      window.electronAPI.saveConfig({ username: newName });
+    }
+    closeModal();
+    // Show confirmation status
+    setStatus('Nickname alterado para: ' + newName + ' ✓');
+    setTimeout(clearStatus, 4000);
+  }
+
+  btnChangeNick.addEventListener('click', openModal);
+  modalCancel.addEventListener('click', closeModal);
+  modalConfirm.addEventListener('click', confirmNick);
+
+  modalInput.addEventListener('input', () => {
+    const val = modalInput.value.replace(/\s/g, '');
+    modalInput.value = val;
+    modalConfirm.disabled = val.length < 3;
+  });
+
+  modalInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !modalConfirm.disabled) confirmNick();
+    if (e.key === 'Escape') closeModal();
+  });
+
+  // Close on overlay click
+  modalOverlay.addEventListener('click', (e) => {
+    if (e.target === modalOverlay) closeModal();
+  });
+})();
+
+// ===== WINDOW BUTTONS (Electron IPC) =====
+document.getElementById('btn-minimize').addEventListener('click', () => {
+  if (window.electronAPI) {
+    window.electronAPI.minimize();
+  }
+});
+
+document.getElementById('btn-close').addEventListener('click', () => {
+  document.body.style.transition = 'opacity 0.3s';
+  document.body.style.opacity = '0';
+  setTimeout(() => {
+    if (window.electronAPI) {
+      window.electronAPI.close();
+    }
+  }, 300);
+});
+
+// ===== REAL SERVER STATUS =====
+let SERVER_IP = 'hiddenwar.srvmc.com';
+
+async function fetchServerStatus() {
+  const playerEl = document.getElementById('player-count');
+  const pingEl = document.getElementById('ping-value');
+  const statusDot = document.getElementById('status-dot');
+  const statusLabel = document.querySelector('.status-label');
+  const statusApi = `https://api.mcsrvstat.us/2/${SERVER_IP}`;
+
+  try {
+    const res = await fetch(statusApi);
+    const data = await res.json();
+
+    if (data.online) {
+      const online = data.players?.online || 0;
+      const max = data.players?.max || '?';
+      playerEl.textContent = `${online}/${max}`;
+      statusDot.style.background = '#27ae60';
+      statusDot.style.boxShadow = '0 0 8px rgba(39,174,96,0.6)';
+      statusLabel.textContent = 'Online';
+    } else {
+      playerEl.textContent = '0/0';
+      statusDot.style.background = '#e74c3c';
+      statusDot.style.boxShadow = '0 0 8px rgba(231,76,60,0.6)';
+      statusLabel.textContent = 'Offline';
+    }
+  } catch (err) {
+    console.warn('[Status] Erro ao consultar servidor:', err);
+    playerEl.textContent = '—';
+    statusLabel.textContent = 'Sem conexão';
+    statusDot.style.background = '#f39c12';
+  }
+}
+
+// ===== AUTO-UPDATER LOGIC =====
+if (window.electronAPI) {
+  const updateBanner = document.getElementById('update-banner');
+  const updateTitle = document.getElementById('update-title');
+  const updateProgress = document.getElementById('update-progress');
+  const btnInstallUpdate = document.getElementById('btn-install-update');
+
+  window.electronAPI.onUpdateStatus((data) => {
+    switch(data.status) {
+      case 'checking':
+        updateBanner.classList.add('visible');
+        updateTitle.textContent = 'Verificando se há atualizações do launcher...';
+        updateProgress.style.width = '100%';
+        updateProgress.style.animation = 'shimmer 2s infinite linear';
+        break;
+      case 'available':
+        updateTitle.textContent = `Nova versão (${data.version}) encontrada! Baixando...`;
+        updateProgress.style.animation = 'none';
+        updateProgress.style.width = '0%';
+        break;
+      case 'not-available':
+        // Hide banner if no update
+        setTimeout(() => updateBanner.classList.remove('visible'), 2000);
+        updateTitle.textContent = 'Launcher atualizado.';
+        break;
+      case 'error':
+        updateTitle.textContent = 'Erro ao verificar atualização: ' + data.error;
+        updateTitle.style.color = '#e74c3c';
+        setTimeout(() => updateBanner.classList.remove('visible'), 5000);
+        break;
+      case 'downloaded':
+        updateTitle.textContent = `Atualização ${data.version} baixada e pronta para instalar!`;
+        updateProgress.style.width = '100%';
+        btnInstallUpdate.classList.remove('hidden');
+        break;
+    }
+  });
+
+  window.electronAPI.onUpdateProgress((data) => {
+    const percent = Math.round(data.percent || 0);
+    updateProgress.style.width = `${percent}%`;
+    updateTitle.textContent = `Baixando atualização... ${percent}%`;
+  });
+
+  btnInstallUpdate.addEventListener('click', () => {
+    window.electronAPI.installUpdate();
+  });
+}
+
+function updateServerIP(newIP) {
+  SERVER_IP = newIP;
+  document.getElementById('sidebar-ip').textContent = newIP;
+  document.getElementById('settings-server-ip').value = newIP;
+  fetchServerStatus();
+}
+
+// ===== SAVE SERVER IP =====
+document.getElementById('btn-save-ip').addEventListener('click', () => {
+  const ipInput = document.getElementById('settings-server-ip');
+  const newIP = ipInput.value.trim();
+  if (!newIP) return;
+  updateServerIP(newIP);
+  if (window.electronAPI) {
+    window.electronAPI.saveConfig({ serverIP: newIP });
+  }
+  const msg = document.getElementById('ip-saved-msg');
+  msg.classList.add('visible');
+  setTimeout(() => msg.classList.remove('visible'), 2500);
+});
+
+// Enter key to save IP
+document.getElementById('settings-server-ip').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') document.getElementById('btn-save-ip').click();
+});
+
+// ===== LOAD ALL SAVED CONFIG =====
+(async function loadSavedConfig() {
+  if (!window.electronAPI) return;
+  const config = await window.electronAPI.readConfig();
+  if (!config) return;
+
+  // Server IP
+  if (config.serverIP) {
+    updateServerIP(config.serverIP);
+  }
+
+  // RAM
+  if (config.ram) {
+    ramSlider.value = config.ram;
+    ramSlider.dispatchEvent(new Event('input'));
+    if (settingsRam) {
+      settingsRam.value = config.ram;
+      settingsRamVal.textContent = config.ram + ' GB';
+      const pct = ((config.ram - settingsRam.min) / (settingsRam.max - settingsRam.min)) * 100;
+      settingsRam.style.background = `linear-gradient(90deg, rgba(232,130,10,0.4) 0%, var(--chakra-orange) ${pct}%, var(--black-card) ${pct}%)`;
+    }
+  }
+
+  // Resolution
+  if (config.resolution) {
+    const resEl = document.getElementById('settings-resolution');
+    if (resEl) resEl.value = config.resolution;
+  }
+
+  // Close on launch
+  if (config.closeOnLaunch !== undefined) {
+    const closeEl = document.getElementById('settings-close-on-launch');
+    if (closeEl) closeEl.checked = config.closeOnLaunch;
+  }
+})();
+
+// ===== SAVE SETTINGS ON CHANGE =====
+if (settingsRam) {
+  settingsRam.addEventListener('change', () => {
+    if (window.electronAPI) window.electronAPI.saveConfig({ ram: parseInt(settingsRam.value) });
+  });
+}
+document.getElementById('settings-resolution')?.addEventListener('change', function() {
+  if (window.electronAPI) window.electronAPI.saveConfig({ resolution: this.value });
+});
+document.getElementById('settings-close-on-launch')?.addEventListener('change', function() {
+  if (window.electronAPI) window.electronAPI.saveConfig({ closeOnLaunch: this.checked });
+});
+
+// Fetch on load + every 30s
+fetchServerStatus();
+setInterval(fetchServerStatus, 30000);
+</script>
+</body>
+</html>
