@@ -1,5 +1,5 @@
 {
-  "version": "3.5",
+  "version": "3.6",
   "mods": [
     {
       "name": "!mixinbooter-10.7.jar",
@@ -16,6 +16,10 @@
     {
       "name": "colorfulhealthbar-0.0.4a.jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/colorfulhealthbar-0.0.4a.jar"
+    },
+    {
+      "name": "CosmeticArmorReworked-1.12.2-v5a.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/CosmeticArmorReworked-1.12.2-v5a.jar"
     }
   ]
 }
