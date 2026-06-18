@@ -1,5 +1,5 @@
 {
-  "version": "5.1",
+  "version": "5.2",
   "mods": [
     {
       "name": "!mixinbooter-10.7.jar",
@@ -76,6 +76,10 @@
     {
       "name": "NarutoModAddon.jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/NarutoModAddon.jar"
+    },
+    {
+      "name": "OptiFine-1.12.2_HD_U_G5.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/OptiFine-1.12.2_HD_U_G5.jar"
     }
   ]
 }
