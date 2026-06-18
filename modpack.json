@@ -1,5 +1,5 @@
 {
-  "version": "2.9",
+  "version": "3.0",
   "mods": [
     {
       "name": "voicechat-forge-1.12.2-2.6.15.jar",
@@ -36,6 +36,10 @@
     {
       "name": "SealsAddon v1.0.jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/SealsAddon v1.0.jar"
+    },
+    {
+      "name": "RinneganAddon v1.3.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/RinneganAddon v1.3.jar"
     }
   ]
 }
