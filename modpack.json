@@ -1,5 +1,5 @@
 {
-  "version": "5.4",
+  "version": "5.5",
   "mods": [
     {
       "name": "!mixinbooter-10.7.jar",
@@ -88,6 +88,10 @@
     {
       "name": "Patchouli-1.0-23.6.jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/Patchouli-1.0-23.6.jar"
+    },
+    {
+      "name": "Placebo-1.12.2-1.6.1.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/Placebo-1.12.2-1.6.1.jar"
     }
   ]
 }
