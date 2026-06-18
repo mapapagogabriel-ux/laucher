@@ -1,0 +1,9 @@
+{
+  "version": "1.1",
+  "mods": [
+    {
+      "name": "CreativeCore_v1.10.71_mc1.12.2.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/CreativeCore_v1.10.71_mc1.12.2.jar"
+    }
+  ]
+}
