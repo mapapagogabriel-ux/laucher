@@ -1,5 +1,5 @@
 {
-  "version": "6.2",
+  "version": "6.3",
   "mods": [
     {
       "name": "!mixinbooter-10.7.jar",
@@ -120,6 +120,10 @@
     {
       "name": "shinobioriginsutils-1.8.0.BETA.jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/shinobioriginsutils-1.8.0.BETA.jar"
+    },
+    {
+      "name": "TestDummy2-2.0.4.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/TestDummy2-2.0.4.jar"
     }
   ]
 }
