@@ -1,5 +1,5 @@
 {
-  "version": "6.1",
+  "version": "6.2",
   "mods": [
     {
       "name": "!mixinbooter-10.7.jar",
@@ -116,6 +116,10 @@
     {
       "name": "shinobiculinary-1.2.0.jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/shinobiculinary-1.2.0.jar"
+    },
+    {
+      "name": "shinobioriginsutils-1.8.0.BETA.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/shinobioriginsutils-1.8.0.BETA.jar"
     }
   ]
 }
