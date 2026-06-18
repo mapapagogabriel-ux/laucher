@@ -1,5 +1,5 @@
 {
-  "version": "4.3",
+  "version": "4.4",
   "mods": [
     {
       "name": "!mixinbooter-10.7.jar",
@@ -44,6 +44,10 @@
     {
       "name": "foamfix-0.10.15-1.12.2.jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/foamfix-0.10.15-1.12.2.jar"
+    },
+    {
+      "name": "furniture-6.3.2-1.12.2.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/furniture-6.3.2-1.12.2.jar"
     }
   ]
 }
