@@ -1,5 +1,5 @@
 {
-  "version": "4.0",
+  "version": "4.1",
   "mods": [
     {
       "name": "!mixinbooter-10.7.jar",
@@ -32,6 +32,10 @@
     {
       "name": "ElecCore-1.12.2-1.9.453.jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/ElecCore-1.12.2-1.9.453.jar"
+    },
+    {
+      "name": "dojutsuslot-1.1.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/dojutsuslot-1.1.jar"
     }
   ]
 }
