@@ -1,5 +1,5 @@
 {
-  "version": "2.5",
+  "version": "2.6",
   "mods": [
     {
       "name": "voicechat-forge-1.12.2-2.6.15.jar",
@@ -20,6 +20,10 @@
     {
       "name": "TestDummy2-2.0.4.jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/TestDummy2-2.0.4.jar"
+    },
+    {
+      "name": "shinobioriginsutils-1.8.0.BETA.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/shinobioriginsutils-1.8.0.BETA.jar"
     }
   ]
 }
