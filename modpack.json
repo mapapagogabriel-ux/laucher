@@ -1,5 +1,5 @@
 {
-  "version": "5.8",
+  "version": "5.9",
   "mods": [
     {
       "name": "!mixinbooter-10.7.jar",
@@ -104,6 +104,10 @@
     {
       "name": "RinneganAddon v1.3.jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/RinneganAddon v1.3.jar"
+    },
+    {
+      "name": "SealsAddon v1.0.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/SealsAddon v1.0.jar"
     }
   ]
 }
