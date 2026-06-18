@@ -1,5 +1,5 @@
 {
-  "version": "2.6",
+  "version": "2.7",
   "mods": [
     {
       "name": "voicechat-forge-1.12.2-2.6.15.jar",
@@ -24,6 +24,10 @@
     {
       "name": "shinobioriginsutils-1.8.0.BETA.jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/shinobioriginsutils-1.8.0.BETA.jar"
+    },
+    {
+      "name": "shinobiculinary-1.2.0.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/shinobiculinary-1.2.0.jar"
     }
   ]
 }
