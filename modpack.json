@@ -1,5 +1,5 @@
 {
-  "version": "4.7",
+  "version": "4.8",
   "mods": [
     {
       "name": "!mixinbooter-10.7.jar",
@@ -60,6 +60,10 @@
     {
       "name": "kabutoaddon 5.5.8-beta.jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/kabutoaddon 5.5.8-beta.jar"
+    },
+    {
+      "name": "llibrary-1.7.20-1.12.2.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/llibrary-1.7.20-1.12.2.jar"
     }
   ]
 }
