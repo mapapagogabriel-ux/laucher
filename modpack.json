@@ -1,5 +1,5 @@
 {
-  "version": "3.9",
+  "version": "4.0",
   "mods": [
     {
       "name": "!mixinbooter-10.7.jar",
@@ -28,6 +28,10 @@
     {
       "name": "CTM-MC1.12.2-1.0.2.31.jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/CTM-MC1.12.2-1.0.2.31.jar"
+    },
+    {
+      "name": "ElecCore-1.12.2-1.9.453.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/ElecCore-1.12.2-1.9.453.jar"
     }
   ]
 }
