@@ -1,5 +1,5 @@
 {
-  "version": "5.6",
+  "version": "5.7",
   "mods": [
     {
       "name": "!mixinbooter-10.7.jar",
@@ -96,6 +96,10 @@
     {
       "name": "PlayerRevive_v1.2.40_mc1.12.2.jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/PlayerRevive_v1.2.40_mc1.12.2.jar"
+    },
+    {
+      "name": "PTRLib-1.0.5.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/PTRLib-1.0.5.jar"
     }
   ]
 }
