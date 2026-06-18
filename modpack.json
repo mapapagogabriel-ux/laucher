@@ -1,5 +1,5 @@
 {
-  "version": "6.6",
+  "version": "6.7",
   "mods": [
     {
       "name": "!mixinbooter-10.7.jar",
@@ -136,6 +136,10 @@
     {
       "name": "VariedCommodities_1.12.2-(31Mar23).jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/VariedCommodities_1.12.2-(31Mar23).jar"
+    },
+    {
+      "name": "voicechat-forge-1.12.2-2.6.15.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/voicechat-forge-1.12.2-2.6.15.jar"
     }
   ]
 }
