@@ -1,9 +1,13 @@
 {
-  "version": "2.1",
+  "version": "2.2",
   "mods": [
     {
       "name": "voicechat-forge-1.12.2-2.6.15.jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/voicechat-forge-1.12.2-2.6.15.jar"
+    },
+    {
+      "name": "VariedCommodities_1.12.2-(31Mar23).jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/VariedCommodities_1.12.2-(31Mar23).jar"
     }
   ]
 }
