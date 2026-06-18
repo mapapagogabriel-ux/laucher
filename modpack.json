@@ -1,5 +1,5 @@
 {
-  "version": "4.1",
+  "version": "4.2",
   "mods": [
     {
       "name": "!mixinbooter-10.7.jar",
@@ -36,6 +36,10 @@
     {
       "name": "dojutsuslot-1.1.jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/dojutsuslot-1.1.jar"
+    },
+    {
+      "name": "entityculling-1.12.2-1.6.3.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/entityculling-1.12.2-1.6.3.jar"
     }
   ]
 }
