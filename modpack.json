@@ -1,9 +1,13 @@
 {
-  "version": "3.2",
+  "version": "3.3",
   "mods": [
     {
       "name": "!mixinbooter-10.7.jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/!mixinbooter-10.7.jar"
+    },
+    {
+      "name": "ahznbstweaks-2.0.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/ahznbstweaks-2.0.jar"
     }
   ]
 }
