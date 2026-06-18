@@ -1,5 +1,5 @@
 {
-  "version": "4.8",
+  "version": "4.9",
   "mods": [
     {
       "name": "!mixinbooter-10.7.jar",
@@ -64,6 +64,10 @@
     {
       "name": "llibrary-1.7.20-1.12.2.jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/llibrary-1.7.20-1.12.2.jar"
+    },
+    {
+      "name": "MorePlayerModels_1.12.2-(05Dec19).jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/MorePlayerModels_1.12.2-(05Dec19).jar"
     }
   ]
 }
