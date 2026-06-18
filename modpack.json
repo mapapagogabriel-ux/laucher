@@ -1,5 +1,5 @@
 {
-  "version": "5.0",
+  "version": "5.1",
   "mods": [
     {
       "name": "!mixinbooter-10.7.jar",
@@ -72,6 +72,10 @@
     {
       "name": "NarutoMod.jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/NarutoMod.jar"
+    },
+    {
+      "name": "NarutoModAddon.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/NarutoModAddon.jar"
     }
   ]
 }
