@@ -1,5 +1,5 @@
 {
-  "version": "2.3",
+  "version": "2.4",
   "mods": [
     {
       "name": "voicechat-forge-1.12.2-2.6.15.jar",
@@ -12,6 +12,10 @@
     {
       "name": "useful_backpacks-1.12.2-1.5.4.85.jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/useful_backpacks-1.12.2-1.5.4.85.jar"
+    },
+    {
+      "name": "u_team_core-forge-1.12.2-2.2.5.339.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/u_team_core-forge-1.12.2-2.2.5.339.jar"
     }
   ]
 }
