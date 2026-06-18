@@ -1,4 +1,9 @@
 {
-  "version": "1.4",
-  "mods": []
+  "version": "1.5",
+  "mods": [
+    {
+      "name": "jurassicsaga-forge-1.20.1-0.1.11.1.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/jurassicsaga-forge-1.20.1-0.1.11.1.jar"
+    }
+  ]
 }
