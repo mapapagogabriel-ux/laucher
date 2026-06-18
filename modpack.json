@@ -1,4 +1,9 @@
 {
-  "version": "3.1",
-  "mods": []
+  "version": "3.2",
+  "mods": [
+    {
+      "name": "!mixinbooter-10.7.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/!mixinbooter-10.7.jar"
+    }
+  ]
 }
