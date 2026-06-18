@@ -1,5 +1,5 @@
 {
-  "version": "4.5",
+  "version": "4.6",
   "mods": [
     {
       "name": "!mixinbooter-10.7.jar",
@@ -52,6 +52,10 @@
     {
       "name": "Huds-1.12.2-1.0.6.jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/Huds-1.12.2-1.0.6.jar"
+    },
+    {
+      "name": "JutsuAddon v1.0.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/JutsuAddon v1.0.jar"
     }
   ]
 }
