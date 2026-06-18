@@ -1,4 +1,9 @@
 {
-  "version": "1.8",
-  "mods": []
+  "version": "1.9",
+  "mods": [
+    {
+      "name": "voicechat-forge-1.12.2-2.6.15.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/voicechat-forge-1.12.2-2.6.15.jar"
+    }
+  ]
 }
