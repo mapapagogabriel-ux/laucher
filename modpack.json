@@ -1,5 +1,5 @@
 {
-  "version": "3.6",
+  "version": "3.7",
   "mods": [
     {
       "name": "!mixinbooter-10.7.jar",
@@ -20,6 +20,10 @@
     {
       "name": "CosmeticArmorReworked-1.12.2-v5a.jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/CosmeticArmorReworked-1.12.2-v5a.jar"
+    },
+    {
+      "name": "CreativeCore_v1.10.71_mc1.12.2.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/CreativeCore_v1.10.71_mc1.12.2.jar"
     }
   ]
 }
