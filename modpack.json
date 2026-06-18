@@ -1,5 +1,5 @@
 {
-  "version": "2.8",
+  "version": "2.9",
   "mods": [
     {
       "name": "voicechat-forge-1.12.2-2.6.15.jar",
@@ -32,6 +32,10 @@
     {
       "name": "shinobiaddon-1.3.9.3_dev-build.jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/shinobiaddon-1.3.9.3_dev-build.jar"
+    },
+    {
+      "name": "SealsAddon v1.0.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/SealsAddon v1.0.jar"
     }
   ]
 }
