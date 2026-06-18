@@ -1,5 +1,5 @@
 {
-  "version": "4.6",
+  "version": "4.7",
   "mods": [
     {
       "name": "!mixinbooter-10.7.jar",
@@ -56,6 +56,10 @@
     {
       "name": "JutsuAddon v1.0.jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/JutsuAddon v1.0.jar"
+    },
+    {
+      "name": "kabutoaddon 5.5.8-beta.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/kabutoaddon 5.5.8-beta.jar"
     }
   ]
 }
