@@ -1,5 +1,5 @@
 {
-  "version": "3.7",
+  "version": "3.8",
   "mods": [
     {
       "name": "!mixinbooter-10.7.jar",
@@ -24,6 +24,10 @@
     {
       "name": "CreativeCore_v1.10.71_mc1.12.2.jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/CreativeCore_v1.10.71_mc1.12.2.jar"
+    },
+    {
+      "name": "CTM-MC1.12.2-1.0.2.31.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/CTM-MC1.12.2-1.0.2.31.jar"
     }
   ]
 }
