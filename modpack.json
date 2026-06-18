@@ -1,45 +1,4 @@
 {
-  "version": "3.0",
-  "mods": [
-    {
-      "name": "voicechat-forge-1.12.2-2.6.15.jar",
-      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/voicechat-forge-1.12.2-2.6.15.jar"
-    },
-    {
-      "name": "VariedCommodities_1.12.2-(31Mar23).jar",
-      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/VariedCommodities_1.12.2-(31Mar23).jar"
-    },
-    {
-      "name": "useful_backpacks-1.12.2-1.5.4.85.jar",
-      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/useful_backpacks-1.12.2-1.5.4.85.jar"
-    },
-    {
-      "name": "u_team_core-forge-1.12.2-2.2.5.339.jar",
-      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/u_team_core-forge-1.12.2-2.2.5.339.jar"
-    },
-    {
-      "name": "TestDummy2-2.0.4.jar",
-      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/TestDummy2-2.0.4.jar"
-    },
-    {
-      "name": "shinobioriginsutils-1.8.0.BETA.jar",
-      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/shinobioriginsutils-1.8.0.BETA.jar"
-    },
-    {
-      "name": "shinobiculinary-1.2.0.jar",
-      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/shinobiculinary-1.2.0.jar"
-    },
-    {
-      "name": "shinobiaddon-1.3.9.3_dev-build.jar",
-      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/shinobiaddon-1.3.9.3_dev-build.jar"
-    },
-    {
-      "name": "SealsAddon v1.0.jar",
-      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/SealsAddon v1.0.jar"
-    },
-    {
-      "name": "RinneganAddon v1.3.jar",
-      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/RinneganAddon v1.3.jar"
-    }
-  ]
+  "version": "3.1",
+  "mods": []
 }
