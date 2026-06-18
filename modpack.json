@@ -1,5 +1,5 @@
 {
-  "version": "6.5",
+  "version": "6.6",
   "mods": [
     {
       "name": "!mixinbooter-10.7.jar",
@@ -132,6 +132,10 @@
     {
       "name": "useful_backpacks-1.12.2-1.5.4.85.jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/useful_backpacks-1.12.2-1.5.4.85.jar"
+    },
+    {
+      "name": "VariedCommodities_1.12.2-(31Mar23).jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/VariedCommodities_1.12.2-(31Mar23).jar"
     }
   ]
 }
