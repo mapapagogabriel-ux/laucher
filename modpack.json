@@ -1,5 +1,5 @@
 {
-  "version": "2.4",
+  "version": "2.5",
   "mods": [
     {
       "name": "voicechat-forge-1.12.2-2.6.15.jar",
@@ -16,6 +16,10 @@
     {
       "name": "u_team_core-forge-1.12.2-2.2.5.339.jar",
       "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/u_team_core-forge-1.12.2-2.2.5.339.jar"
+    },
+    {
+      "name": "TestDummy2-2.0.4.jar",
+      "url": "https://raw.githubusercontent.com/mapapagogabriel-ux/laucher/main/mods/TestDummy2-2.0.4.jar"
     }
   ]
 }
